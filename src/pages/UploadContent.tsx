@@ -1,15 +1,15 @@
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { useDropzone } from 'react-dropzone';
 import { 
-  CloudArrowUpIcon, 
-  DocumentTextIcon, 
-  PhotoIcon, 
-  VideoCameraIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
   InformationCircleIcon
 } from '@heroicons/react/24/outline';
+import UploadZone from '../components/features/UploadZone';
+import Button from '../components/ui/Button';
+import Card from '../components/ui/Card';
+import ProgressBar from '../components/ui/ProgressBar';
+import { useUpload } from '../hooks/useApi';
 
 interface UploadFormData {
   title: string;
@@ -34,8 +34,7 @@ const UploadContent = () => {
   
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [currentStep, setCurrentStep] = useState(1);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
+  const { upload, isUploading, uploadProgress, error: uploadError } = useUpload();
 
   const categories = [
     'Tamil Classical Dance',
@@ -50,26 +49,9 @@ const UploadContent = () => {
     'Textile Arts'
   ];
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const handleFilesSelected = useCallback((acceptedFiles: File[]) => {
     setUploadedFiles(prev => [...prev, ...acceptedFiles]);
   }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
-      'video/*': ['.mp4', '.mov', '.avi'],
-      'text/*': ['.txt', '.md'],
-      'application/pdf': ['.pdf']
-    },
-    maxSize: 100 * 1024 * 1024 // 100MB
-  });
-
-  const getFileIcon = (file: File) => {
-    if (file.type.startsWith('image/')) return PhotoIcon;
-    if (file.type.startsWith('video/')) return VideoCameraIcon;
-    return DocumentTextIcon;
-  };
 
   const removeFile = (index: number) => {
     setUploadedFiles(prev => prev.filter((_, i) => i !== index));
@@ -77,16 +59,16 @@ const UploadContent = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsUploading(true);
-    
-    // Simulate upload progress
-    for (let i = 0; i <= 100; i += 10) {
-      setUploadProgress(i);
-      await new Promise(resolve => setTimeout(resolve, 200));
+    if (!uploadedFiles.length || !formData.consent) {
+      return;
     }
-    
-    setCurrentStep(4);
-    setIsUploading(false);
+
+    try {
+      await upload(uploadedFiles[0], formData);
+      setCurrentStep(4);
+    } catch (error) {
+      console.error('Upload failed:', error);
+    }
   };
 
   const steps = [
@@ -148,7 +130,7 @@ const UploadContent = () => {
         </div>
 
         {/* Step Content */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+        <Card className="overflow-hidden">
           {currentStep === 1 && (
             <motion.div
               initial={{ opacity: 0, x: 20 }}
@@ -160,26 +142,7 @@ const UploadContent = () => {
               </h2>
               
               {/* Dropzone */}
-              <div
-                {...getRootProps()}
-                className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-300 ${
-                  isDragActive
-                    ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
-                    : 'border-slate-300 dark:border-slate-600 hover:border-indigo-400 hover:bg-slate-50 dark:hover:bg-slate-700'
-                }`}
-              >
-                <input {...getInputProps()} />
-                <CloudArrowUpIcon className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-                  {isDragActive ? 'Drop files here' : 'Drag & drop files here'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-300 mb-4">
-                  or click to browse your computer
-                </p>
-                <div className="text-sm text-slate-500 dark:text-slate-400">
-                  Supports: Images, Videos, Documents, PDFs (Max 100MB each)
-                </div>
-              </div>
+              <UploadZone onFilesSelected={handleFilesSelected} />
 
               {/* Uploaded Files */}
               {uploadedFiles.length > 0 && (
@@ -189,14 +152,15 @@ const UploadContent = () => {
                   </h3>
                   <div className="space-y-3">
                     {uploadedFiles.map((file, index) => {
-                      const FileIcon = getFileIcon(file);
                       return (
                         <div
                           key={index}
                           className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700 rounded-lg"
                         >
                           <div className="flex items-center space-x-3">
-                            <FileIcon className="w-8 h-8 text-indigo-600" />
+                            <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center">
+                              <span className="text-indigo-600 dark:text-indigo-400 text-sm">📄</span>
+                            </div>
                             <div>
                               <div className="font-medium text-slate-900 dark:text-white">
                                 {file.name}
@@ -220,13 +184,12 @@ const UploadContent = () => {
               )}
 
               <div className="flex justify-end mt-8">
-                <button
+                <Button
                   onClick={() => setCurrentStep(2)}
                   disabled={uploadedFiles.length === 0}
-                  className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
                 >
                   Continue
-                </button>
+                </Button>
               </div>
             </motion.div>
           )}
@@ -331,18 +294,17 @@ const UploadContent = () => {
               </form>
 
               <div className="flex justify-between mt-8">
-                <button
+                <Button
+                  variant="secondary"
                   onClick={() => setCurrentStep(1)}
-                  className="bg-slate-200 dark:bg-slate-600 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-lg font-medium hover:bg-slate-300 dark:hover:bg-slate-500 transition-colors"
                 >
                   Back
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => setCurrentStep(3)}
-                  className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
                 >
                   Continue
-                </button>
+                </Button>
               </div>
             </motion.div>
           )}
@@ -415,19 +377,19 @@ const UploadContent = () => {
               </div>
 
               <div className="flex justify-between">
-                <button
+                <Button
+                  variant="secondary"
                   onClick={() => setCurrentStep(2)}
-                  className="bg-slate-200 dark:bg-slate-600 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-lg font-medium hover:bg-slate-300 dark:hover:bg-slate-500 transition-colors"
                 >
                   Back
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={handleSubmit}
                   disabled={!formData.consent || isUploading}
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                  loading={isUploading}
                 >
-                  {isUploading ? 'Submitting...' : 'Submit for Verification'}
-                </button>
+                  Submit for Verification
+                </Button>
               </div>
             </motion.div>
           )}
@@ -452,13 +414,8 @@ const UploadContent = () => {
               </p>
 
               {/* Progress Animation */}
-              <div className="bg-slate-100 dark:bg-slate-700 rounded-full h-2 mb-4 max-w-md mx-auto">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: '100%' }}
-                  transition={{ duration: 2, ease: 'easeInOut' }}
-                  className="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full"
-                />
+              <div className="max-w-md mx-auto mb-4">
+                <ProgressBar value={100} showLabel color="indigo" />
               </div>
               
               <p className="text-sm text-slate-500 dark:text-slate-400 mb-8">
@@ -466,7 +423,7 @@ const UploadContent = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
+                <Button
                   onClick={() => {
                     setCurrentStep(1);
                     setUploadedFiles([]);
@@ -480,17 +437,16 @@ const UploadContent = () => {
                       medicalDisclaimer: false
                     });
                   }}
-                  className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
                 >
                   Upload More Content
-                </button>
-                <button className="bg-slate-200 dark:bg-slate-600 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-lg font-medium hover:bg-slate-300 dark:hover:bg-slate-500 transition-colors">
+                </Button>
+                <Button variant="secondary">
                   View My Submissions
-                </button>
+                </Button>
               </div>
             </motion.div>
           )}
-        </div>
+        </Card>
       </div>
     </div>
   );

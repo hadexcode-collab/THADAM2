@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { usePack } from '../hooks/useApi';
+import LoadingSpinner from '../components/LoadingSpinner';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
+import ProgressBar from '../components/ui/ProgressBar';
+import AuthenticityBadge from '../components/features/AuthenticityBadge';
 import {
   ArrowLeftIcon,
   PlayIcon,
@@ -17,71 +23,31 @@ import {
 
 const PackViewer = () => {
   const { id } = useParams();
+  const { pack, loading, error } = usePack(id || '');
   const [currentLesson, setCurrentLesson] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<number[]>([]);
   const [showQuiz, setShowQuiz] = useState(false);
 
-  // Mock pack data - in real app, fetch based on id
-  const pack = {
-    id: '1',
-    title: 'Bharatanatyam Fundamentals',
-    category: 'Tamil Classical Dance',
-    description: 'Master the basic positions, hand gestures, and movements of this classical dance form with authentic instruction from renowned gurus.',
-    authenticity: 96,
-    difficulty: 'Beginner',
-    duration: '4.5 hours',
-    learners: 1247,
-    rating: 4.9,
-    instructor: 'Guru Meera Krishnan',
-    instructorBio: 'Renowned Bharatanatyam dancer with 25+ years of experience, trained at Kalakshetra Foundation.',
-    thumbnail: '🩰',
-    lessons: [
-      {
-        id: 1,
-        title: 'Introduction to Bharatanatyam',
-        type: 'video',
-        duration: '15 min',
-        description: 'Learn about the history and significance of this classical dance form.',
-        content: 'Bharatanatyam is one of the oldest classical dance forms of India, originating in Tamil Nadu...'
-      },
-      {
-        id: 2,
-        title: 'Basic Standing Position (Araimandi)',
-        type: 'video',
-        duration: '20 min',
-        description: 'Master the fundamental standing position that forms the base of all movements.',
-        content: 'The Araimandi position is crucial for all Bharatanatyam movements. Stand with feet apart...'
-      },
-      {
-        id: 3,
-        title: 'Hand Gestures (Mudras) - Part 1',
-        type: 'interactive',
-        duration: '25 min',
-        description: 'Learn the basic single-hand gestures and their meanings.',
-        content: 'Single-hand mudras are the foundation of expression in Bharatanatyam...'
-      },
-      {
-        id: 4,
-        title: 'Practice Session',
-        type: 'practice',
-        duration: '30 min',
-        description: 'Practice what you\'ve learned with guided exercises.',
-        content: 'Now let\'s practice combining the standing position with basic hand gestures...'
-      }
-    ],
-    quiz: [
-      {
-        question: 'What is the basic standing position in Bharatanatyam called?',
-        options: ['Araimandi', 'Muzhumandi', 'Nattu', 'Mandal'],
-        correct: 0
-      },
-      {
-        question: 'Which state is the origin of Bharatanatyam?',
-        options: ['Kerala', 'Karnataka', 'Tamil Nadu', 'Andhra Pradesh'],
-        correct: 2
-      }
-    ]
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+        <LoadingSpinner size="lg" text="Loading pack..." />
+      </div>
+    );
+  }
+
+  if (error || !pack) {
+    return (
+      <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 dark:text-red-400 mb-4">Pack not found</p>
+          <Link to="/catalog">
+            <Button>Back to Catalog</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const getLessonIcon = (type: string) => {
     switch (type) {
@@ -102,7 +68,7 @@ const PackViewer = () => {
     }
   };
 
-  const progress = (completedLessons.length / pack.lessons.length) * 100;
+  const progress = pack.lessons?.length ? (completedLessons.length / pack.lessons.length) * 100 : 0;
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
@@ -117,7 +83,7 @@ const PackViewer = () => {
             <span>Back to Catalog</span>
           </Link>
           
-          <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-8">
+          <Card className="p-8">
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2">
                 <div className="flex items-start space-x-4 mb-6">
@@ -127,10 +93,7 @@ const PackViewer = () => {
                       <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
                         {pack.title}
                       </h1>
-                      <div className="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 px-3 py-1 rounded-full flex items-center space-x-1">
-                        <ShieldCheckIcon className="w-4 h-4" />
-                        <span className="text-sm font-medium">{pack.authenticity}% Verified</span>
-                      </div>
+                      <AuthenticityBadge score={pack.authenticity_score} />
                     </div>
                     <p className="text-indigo-600 dark:text-indigo-400 font-medium mb-3">
                       {pack.category}
@@ -156,7 +119,7 @@ const PackViewer = () => {
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-slate-900 dark:text-white">
-                      {pack.learners.toLocaleString()}
+                      {pack.learners_count.toLocaleString()}
                     </div>
                     <div className="text-sm text-slate-500 dark:text-slate-400">Learners</div>
                   </div>
@@ -186,7 +149,7 @@ const PackViewer = () => {
                     </div>
                   </div>
                   <p className="text-sm text-slate-600 dark:text-slate-300">
-                    {pack.instructorBio}
+                    Renowned expert with 25+ years of experience in Tamil cultural preservation.
                   </p>
                 </div>
               </div>
@@ -201,32 +164,26 @@ const PackViewer = () => {
                       {Math.round(progress)}%
                     </span>
                   </div>
-                  <div className="w-full bg-slate-200 dark:bg-slate-600 rounded-full h-2 mb-4">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${progress}%` }}
-                      className="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full"
-                    />
-                  </div>
+                  <ProgressBar value={progress} showLabel color="indigo" className="mb-4" />
                   <p className="text-sm text-slate-600 dark:text-slate-300">
-                    {completedLessons.length} of {pack.lessons.length} lessons completed
+                    {completedLessons.length} of {pack.lessons?.length || 0} lessons completed
                   </p>
                 </div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
 
         {/* Main Content */}
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Lesson List */}
           <div className="lg:col-span-1">
-            <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 sticky top-8">
+            <Card className="p-6 sticky top-8">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-4">
                 Course Content
               </h3>
               <div className="space-y-2">
-                {pack.lessons.map((lesson, index) => {
+                {pack.lessons?.map((lesson, index) => {
                   const LessonIcon = getLessonIcon(lesson.type);
                   const isCompleted = completedLessons.includes(index);
                   const isCurrent = currentLesson === index;
@@ -277,38 +234,38 @@ const PackViewer = () => {
                   </div>
                 </button>
               </div>
-            </div>
+            </Card>
           </div>
 
           {/* Lesson Content */}
           <div className="lg:col-span-3">
-            <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <Card className="overflow-hidden">
               {!showQuiz ? (
                 <div className="p-8">
                   <div className="mb-6">
                     <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                      {pack.lessons[currentLesson]?.title}
+                      {pack.lessons?.[currentLesson]?.title}
                     </h2>
                     <p className="text-slate-600 dark:text-slate-400">
-                      {pack.lessons[currentLesson]?.description}
+                      {pack.lessons?.[currentLesson]?.description}
                     </p>
                   </div>
 
                   {/* Video Player Placeholder */}
-                  {pack.lessons[currentLesson]?.type === 'video' && (
+                  {pack.lessons?.[currentLesson]?.type === 'video' && (
                     <div className="bg-slate-900 rounded-lg aspect-video flex items-center justify-center mb-6">
                       <div className="text-center">
                         <PlayIcon className="w-16 h-16 text-white mx-auto mb-4" />
                         <p className="text-white">Video Player</p>
                         <p className="text-slate-400 text-sm">
-                          {pack.lessons[currentLesson]?.duration}
+                          {pack.lessons?.[currentLesson]?.duration}
                         </p>
                       </div>
                     </div>
                   )}
 
                   {/* Interactive Content */}
-                  {pack.lessons[currentLesson]?.type === 'interactive' && (
+                  {pack.lessons?.[currentLesson]?.type === 'interactive' && (
                     <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg p-8 mb-6">
                       <div className="text-center">
                         <PhotoIcon className="w-16 h-16 text-indigo-600 dark:text-indigo-400 mx-auto mb-4" />
@@ -321,7 +278,7 @@ const PackViewer = () => {
                   )}
 
                   {/* Practice Session */}
-                  {pack.lessons[currentLesson]?.type === 'practice' && (
+                  {pack.lessons?.[currentLesson]?.type === 'practice' && (
                     <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-8 mb-6">
                       <div className="text-center">
                         <CheckCircleIcon className="w-16 h-16 text-green-600 dark:text-green-400 mx-auto mb-4" />
@@ -334,40 +291,38 @@ const PackViewer = () => {
                   )}
 
                   <div className="prose prose-slate dark:prose-invert max-w-none mb-8">
-                    <p>{pack.lessons[currentLesson]?.content}</p>
+                    <p>{pack.lessons?.[currentLesson]?.content}</p>
                   </div>
 
                   <div className="flex justify-between">
-                    <button
+                    <Button
+                      variant="secondary"
                       onClick={() => setCurrentLesson(Math.max(0, currentLesson - 1))}
                       disabled={currentLesson === 0}
-                      className="bg-slate-200 dark:bg-slate-600 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-lg font-medium hover:bg-slate-300 dark:hover:bg-slate-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       Previous
-                    </button>
+                    </Button>
                     
                     <div className="flex space-x-3">
-                      <button
+                      <Button
+                        variant="outline"
                         onClick={() => markLessonComplete(currentLesson)}
-                        className="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
                       >
                         Mark Complete
-                      </button>
+                      </Button>
                       
-                      {currentLesson < pack.lessons.length - 1 ? (
-                        <button
+                      {currentLesson < (pack.lessons?.length || 0) - 1 ? (
+                        <Button
                           onClick={() => setCurrentLesson(currentLesson + 1)}
-                          className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
                         >
                           Next Lesson
-                        </button>
+                        </Button>
                       ) : (
-                        <button
+                        <Button
                           onClick={() => setShowQuiz(true)}
-                          className="bg-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors"
                         >
                           Take Quiz
-                        </button>
+                        </Button>
                       )}
                     </div>
                   </div>
@@ -378,7 +333,7 @@ const PackViewer = () => {
                     Final Quiz
                   </h2>
                   <div className="space-y-6">
-                    {pack.quiz.map((question, index) => (
+                    {pack.quiz_questions?.map((question, index) => (
                       <div key={index} className="bg-slate-50 dark:bg-slate-700 rounded-lg p-6">
                         <h3 className="font-medium text-slate-900 dark:text-white mb-4">
                           {index + 1}. {question.question}
@@ -399,13 +354,13 @@ const PackViewer = () => {
                       </div>
                     ))}
                     
-                    <button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-300">
+                    <Button className="w-full">
                       Submit Quiz
-                    </button>
+                    </Button>
                   </div>
                 </div>
               )}
-            </div>
+            </Card>
           </div>
         </div>
       </div>
