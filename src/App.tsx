@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/layout/Navbar';
@@ -16,7 +16,7 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <Router>
-          <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 transition-colors duration-300">
+          <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 transition-all duration-300">
             <Navbar />
             <main className="relative">
               <Routes>
@@ -26,7 +26,6 @@ function App() {
                 <Route path="/catalog" element={<PackCatalog />} />
                 <Route path="/pack/:id" element={<PackViewer />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
             <Toaster />
