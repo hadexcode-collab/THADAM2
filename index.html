@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thadam - Tamil Cultural Knowledge Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div id="app">
+        <!-- Header -->
+        <header class="bg-gray-800 border-b border-gray-700 shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="shield" class="h-8 w-8 text-orange-500"></i>
+                        <h1 class="text-2xl font-bold text-orange-500">Thadam</h1>
+                        <span class="text-sm text-gray-400">தடம்</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="space-y-16">
+                <!-- Hero Section -->
+                <div class="text-center space-y-8">
+                    <div class="space-y-4">
+                        <h1 class="text-5xl font-bold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
+                            Welcome to Thadam
+                        </h1>
+                        <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                            Preserve and authenticate Indian cultural knowledge through AI-powered verification. 
+                            From Tamil dances to traditional medicines, ensure cultural wisdom remains accurate for future generations.
+                        </p>
+                    </div>
+
+                    <!-- Role Selection -->
+                    <div class="flex flex-col sm:flex-row justify-center gap-8 mt-12">
+                        <button onclick="selectRole('uploader')" class="group relative bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white px-8 py-6 rounded-xl shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-orange-500/25">
+                            <div class="flex flex-col items-center space-y-3">
+                                <i data-lucide="upload" class="h-12 w-12"></i>
+                                <div>
+                                    <div class="text-xl font-bold">I'm an Uploader</div>
+                                    <div class="text-orange-100 text-sm">Contribute cultural content</div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button onclick="selectRole('learner')" class="group relative bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-8 py-6 rounded-xl shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-blue-500/25">
+                            <div class="flex flex-col items-center space-y-3">
+                                <i data-lucide="book-open" class="h-12 w-12"></i>
+                                <div>
+                                    <div class="text-xl font-bold">I'm a Learner</div>
+                                    <div class="text-blue-100 text-sm">Explore verified knowledge</div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center space-y-2">
+                        <div class="text-3xl font-bold text-orange-400">1,247</div>
+                        <div class="text-gray-400 text-sm">Cultural Submissions</div>
+                    </div>
+                    <div class="text-center space-y-2">
+                        <div class="text-3xl font-bold text-orange-400">89</div>
+                        <div class="text-gray-400 text-sm">Verified Packs</div>
+                    </div>
+                    <div class="text-center space-y-2">
+                        <div class="text-3xl font-bold text-orange-400">156</div>
+                        <div class="text-gray-400 text-sm">Active Contributors</div>
+                    </div>
+                    <div class="text-center space-y-2">
+                        <div class="text-3xl font-bold text-orange-400">94%</div>
+                        <div class="text-gray-400 text-sm">Authenticity Rate</div>
+                    </div>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-orange-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-orange-500/10 p-3 rounded-lg">
+                                <i data-lucide="shield" class="h-6 w-6 text-orange-400"></i>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-semibold text-white">AI-Powered Authentication</h3>
+                                <p class="text-gray-400 leading-relaxed">Advanced ML pipeline verifies cultural knowledge authenticity with 80%+ accuracy threshold</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-orange-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-orange-500/10 p-3 rounded-lg">
+                                <i data-lucide="check-circle" class="h-6 w-6 text-orange-400"></i>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-semibold text-white">Verified Cultural Packs</h3>
+                                <p class="text-gray-400 leading-relaxed">Structured learning materials from authenticated Tamil heritage content</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-orange-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-orange-500/10 p-3 rounded-lg">
+                                <i data-lucide="users" class="h-6 w-6 text-orange-400"></i>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-semibold text-white">Community Driven</h3>
+                                <p class="text-gray-400 leading-relaxed">Uploaders contribute knowledge, learners access verified cultural wisdom</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-orange-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-orange-500/10 p-3 rounded-lg">
+                                <i data-lucide="globe" class="h-6 w-6 text-orange-400"></i>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-semibold text-white">Cultural Preservation</h3>
+                                <p class="text-gray-400 leading-relaxed">Preserving Tamil dances, medicines, rituals, and traditional practices</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="bg-gradient-to-r from-orange-900/50 to-red-900/50 p-8 rounded-xl border border-orange-500/20 text-center">
+                    <h2 class="text-2xl font-bold text-white mb-4">
+                        Ready to Preserve Tamil Heritage?
+                    </h2>
+                    <p class="text-orange-100 mb-6 max-w-2xl mx-auto">
+                        Join our community of cultural preservationists. Upload authentic content or learn from verified cultural packs.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="selectRole('uploader')" class="bg-orange-600 hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                            Start Contributing
+                        </button>
+                        <button onclick="selectRole('learner')" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                            Explore Knowledge
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 border-t border-gray-700 mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="text-center text-gray-400">
+                    <p class="text-sm">
+                        Preserving Tamil heritage through technology • 
+                        <span class="text-orange-500 ml-1">🕉️</span>
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        function selectRole(role) {
+            alert(`Selected role: ${role}. This is a demo - full functionality would be available in the React version.`);
+        }
+    </script>
+</body>
+</html>
