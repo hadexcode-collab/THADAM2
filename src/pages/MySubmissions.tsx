@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, CheckCircle, XCircle, AlertCircle, Eye, Download } from 'lucide-react';
-
-interface Submission {
-  id: string;
-  title: string;
-  category: string;
-  status: 'processing' | 'verified' | 'rejected' | 'review';
-  authenticity_score: number | null;
-  uploaded_at: string;
-  verified_at: string | null;
-  pack_id: string | null;
-}
+import { mockApi, Submission } from '../services/mockApi';
 
 const MySubmissions: React.FC = () => {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -23,11 +13,8 @@ const MySubmissions: React.FC = () => {
 
   const fetchSubmissions = async () => {
     try {
-      const response = await fetch('/api/submissions');
-      if (response.ok) {
-        const data = await response.json();
-        setSubmissions(data);
-      }
+      const data = await mockApi.getSubmissions();
+      setSubmissions(data);
     } catch (error) {
       console.error('Failed to fetch submissions:', error);
     } finally {

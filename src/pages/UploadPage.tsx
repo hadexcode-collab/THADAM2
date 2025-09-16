@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Upload, FileText, Image, Video, AlertCircle, CheckCircle, Clock } from 'lucide-react';
+import { mockApi } from '../services/mockApi';
 
 interface UploadFormData {
   title: string;
@@ -71,16 +72,9 @@ const UploadPage: React.FC = () => {
     setUploadStatus('uploading');
 
     try {
-      const formDataObj = new FormData();
-      formDataObj.append('file', selectedFile);
-      formDataObj.append('metadata', JSON.stringify(formData));
-
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formDataObj,
-      });
-
-      if (response.ok) {
+      const result = await mockApi.uploadContent(selectedFile, formData);
+      
+      if (result.success) {
         setUploadStatus('success');
         // Reset form after successful upload
         setTimeout(() => {

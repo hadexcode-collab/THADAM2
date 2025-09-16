@@ -1,18 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, Clock, Users, Star, Shield, Search } from 'lucide-react';
-
-interface CulturalPack {
-  id: string;
-  title: string;
-  category: string;
-  description: string;
-  authenticity_score: number;
-  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
-  duration: string;
-  learners_count: number;
-  created_at: string;
-  uploader_attribution: string;
-}
+import { mockApi, CulturalPack } from '../services/mockApi';
 
 interface PackMarketplaceProps {
   onPackSelect: (packId: string) => void;
@@ -44,52 +32,10 @@ const PackMarketplace: React.FC<PackMarketplaceProps> = ({ onPackSelect }) => {
 
   const fetchPacks = async () => {
     try {
-      const response = await fetch('/api/packs');
-      if (response.ok) {
-        const data = await response.json();
-        setPacks(data);
-      }
+      const data = await mockApi.getPacks();
+      setPacks(data);
     } catch (error) {
       console.error('Failed to fetch packs:', error);
-      // Mock data for demo
-      setPacks([
-        {
-          id: '1',
-          title: 'Bharatanatyam: Basic Adavus',
-          category: 'Tamil Classical Dance',
-          description: 'Learn the fundamental steps and movements of Bharatanatyam, starting with basic adavus (dance units).',
-          authenticity_score: 95,
-          difficulty: 'Beginner',
-          duration: '2 hours',
-          learners_count: 324,
-          created_at: '2024-01-15',
-          uploader_attribution: 'Guru Meera Krishnan, Kalakshetra'
-        },
-        {
-          id: '2',
-          title: 'Traditional Siddha Medicine Basics',
-          category: 'Traditional Medicine',
-          description: 'Introduction to Siddha medicine principles, herbal preparations, and traditional diagnostic methods.',
-          authenticity_score: 87,
-          difficulty: 'Intermediate',
-          duration: '3.5 hours',
-          learners_count: 156,
-          created_at: '2024-01-10',
-          uploader_attribution: 'Dr. Rajesh Vaidyar, Siddha College'
-        },
-        {
-          id: '3',
-          title: 'Temple Architecture of Tamil Nadu',
-          category: 'Architectural Styles',
-          description: 'Explore the intricate architectural styles of Tamil temples, from Chola to Vijayanagara periods.',
-          authenticity_score: 92,
-          difficulty: 'Advanced',
-          duration: '4 hours',
-          learners_count: 89,
-          created_at: '2024-01-08',
-          uploader_attribution: 'Prof. Lakshmi Narayanan, Anna University'
-        }
-      ]);
     } finally {
       setLoading(false);
     }
