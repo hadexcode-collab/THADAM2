@@ -13,6 +13,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
+  loginAsDemo: (role: 'contributor' | 'learner') => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,15 +27,11 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>({
-    id: '1',
-    name: 'Priya Sharma',
-    email: 'priya@example.com',
-    role: 'contributor'
-  });
+  const [user, setUser] = useState<User | null>(null);
 
   const login = async (email: string, password: string) => {
     // Mock login - replace with actual API call
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
     setUser({
       id: '1',
       name: 'Priya Sharma',
@@ -43,6 +40,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
+  const loginAsDemo = (role: 'contributor' | 'learner') => {
+    const demoUsers = {
+      contributor: {
+        id: '1',
+        name: 'Priya Sharma',
+        email: 'priya@example.com',
+        role: 'contributor' as const
+      },
+      learner: {
+        id: '2', 
+        name: 'Raj Kumar',
+        email: 'raj@example.com',
+        role: 'learner' as const
+      }
+    };
+    setUser(demoUsers[role]);
+  };
   const logout = () => {
     setUser(null);
   };
@@ -52,7 +66,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       user,
       login,
       logout,
-      isAuthenticated: !!user
+      isAuthenticated: !!user,
+      loginAsDemo
     }}>
       {children}
     </AuthContext.Provider>

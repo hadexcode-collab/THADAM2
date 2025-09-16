@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuth } from '../contexts/AuthContext';
 import { 
   ShieldCheckIcon, 
   BookOpenIcon, 
@@ -12,6 +13,8 @@ import {
 } from '@heroicons/react/24/outline';
 
 const LandingPage = () => {
+  const { loginAsDemo } = useAuth();
+
   const features = [
     {
       icon: ShieldCheckIcon,
@@ -98,20 +101,20 @@ const LandingPage = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                to="/upload"
+              <button
+                onClick={() => loginAsDemo('contributor')}
                 className="group bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center space-x-2"
               >
                 <span>Start Contributing</span>
                 <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                to="/catalog"
+              </button>
+              <button
+                onClick={() => loginAsDemo('learner')}
                 className="group bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-8 py-4 rounded-xl text-lg font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300 flex items-center space-x-2"
               >
                 <PlayIcon className="w-5 h-5" />
                 <span>Explore Catalog</span>
-              </Link>
+              </button>
             </div>
 
             {/* Stats */}
@@ -250,18 +253,18 @@ const LandingPage = () => {
               Join our community of cultural preservationists and help ensure traditional Tamil knowledge lives on for future generations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/upload"
+              <button
+                onClick={() => loginAsDemo('contributor')}
                 className="bg-white text-indigo-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-slate-50 transition-all duration-300 transform hover:scale-105"
               >
                 Start Contributing Today
-              </Link>
-              <Link
-                to="/catalog"
+              </button>
+              <button
+                onClick={() => loginAsDemo('learner')}
                 className="border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white hover:text-indigo-600 transition-all duration-300"
               >
                 Explore Learning Packs
-              </Link>
+              </button>
             </div>
           </motion.div>
         </div>

@@ -1,7 +1,5 @@
 // API service for backend communication
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://your-backend-url.com/api' 
-  : 'http://localhost:8000/api';
+const API_BASE_URL = 'https://api.example.com'; // Mock API endpoint
 
 export interface UploadResponse {
   success: boolean;
@@ -79,45 +77,29 @@ class ApiService {
 
   // Upload content
   async uploadContent(file: File, metadata: any): Promise<UploadResponse> {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('metadata', JSON.stringify(metadata));
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/upload`, {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Upload failed: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Upload failed:', error);
-      // Return mock response for demo
-      return {
-        success: true,
-        submission_id: `sub_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-      };
-    }
+    // Simulate upload delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Return mock response for demo
+    return {
+      success: true,
+      submission_id: `sub_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    };
   }
 
   // Get verification status
   async getVerificationStatus(submissionId: string): Promise<VerificationStatus> {
-    try {
-      return await this.request<VerificationStatus>(`/verify/${submissionId}`);
-    } catch (error) {
-      // Return mock data for demo
-      return {
-        id: submissionId,
-        status: 'processing',
-        authenticity_score: null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      };
-    }
+    // Simulate processing delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Return mock data for demo
+    return {
+      id: submissionId,
+      status: 'processing',
+      authenticity_score: null,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
   }
 
   // Get cultural packs
@@ -126,28 +108,21 @@ class ApiService {
     difficulty?: string;
     search?: string;
   }): Promise<CulturalPack[]> {
-    try {
-      const params = new URLSearchParams();
-      if (filters?.category) params.append('category', filters.category);
-      if (filters?.difficulty) params.append('difficulty', filters.difficulty);
-      if (filters?.search) params.append('search', filters.search);
-
-      return await this.request<CulturalPack[]>(`/packs?${params}`);
-    } catch (error) {
-      // Return mock data for demo
-      return this.getMockPacks();
-    }
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Return mock data for demo
+    return this.getMockPacks();
   }
 
   // Get single pack
   async getPack(packId: string): Promise<CulturalPack> {
-    try {
-      return await this.request<CulturalPack>(`/pack/${packId}`);
-    } catch (error) {
-      // Return mock data for demo
-      const packs = this.getMockPacks();
-      return packs.find(p => p.id === packId) || packs[0];
-    }
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // Return mock data for demo
+    const packs = this.getMockPacks();
+    return packs.find(p => p.id === packId) || packs[0];
   }
 
   // Mock data for demo purposes

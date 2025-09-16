@@ -28,12 +28,18 @@ export function useUpload() {
       clearInterval(progressInterval);
       setUploadProgress(100);
       
+      // Reset after success
+      setTimeout(() => {
+        setUploadProgress(0);
+        setIsUploading(false);
+      }, 1000);
+      
       return result;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Upload failed');
       throw err;
     } finally {
-      setIsUploading(false);
+      // Don't set uploading to false here, let the success timeout handle it
     }
   };
 
@@ -51,6 +57,7 @@ export function usePacks(filters?: { category?: string; difficulty?: string; sea
         setLoading(true);
         const data = await apiService.getCulturalPacks(filters);
         setPacks(data);
+        setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch packs');
       } finally {
@@ -61,7 +68,20 @@ export function usePacks(filters?: { category?: string; difficulty?: string; sea
     fetchPacks();
   }, [filters?.category, filters?.difficulty, filters?.search]);
 
-  return { packs, loading, error, refetch: () => fetchPacks() };
+  const refetch = async () => {
+    try {
+      setLoading(true);
+      const data = await apiService.getCulturalPacks(filters);
+      setPacks(data);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch packs');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { packs, loading, error, refetch };
 }
 
 export function usePack(packId: string) {
@@ -75,6 +95,7 @@ export function usePack(packId: string) {
         setLoading(true);
         const data = await apiService.getPack(packId);
         setPack(data);
+        setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch pack');
       } finally {

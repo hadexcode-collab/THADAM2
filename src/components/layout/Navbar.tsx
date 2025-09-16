@@ -16,7 +16,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
-  const { user, logout } = useAuth();
+  const { user, logout, loginAsDemo } = useAuth();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -94,11 +94,22 @@ const Navbar = () => {
                     {user.name.charAt(0)}
                   </span>
                 </div>
+                <button
+                  onClick={logout}
+                  className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+                >
+                  Logout
+                </button>
               </div>
             ) : (
-              <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-200">
-                Sign In
-              </button>
+              <div className="flex items-center space-x-2">
+                <button 
+                  onClick={() => loginAsDemo('contributor')}
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-200"
+                >
+                  Demo Login
+                </button>
+              </div>
             )}
 
             {/* Mobile menu button */}
