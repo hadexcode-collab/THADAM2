@@ -3,13 +3,701 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecipeHub - Premium Recipe Marketplace</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>EduPlatform - Universal Learning Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hidden { display: none; }
+        .active { display: block; }
+    </style>
 </head>
-<body class="font-body">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">E</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                            EduPlatform
+                        </h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Learn Without Limits</p>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="showPage('home')" class="nav-link text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-colors">Home</button>
+                    <button onclick="showPage('catalog')" class="nav-link text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-colors">Catalog</button>
+                    <button onclick="showPage('upload')" class="nav-link text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-colors">Upload</button>
+                    <button onclick="showPage('dashboard')" class="nav-link text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-colors">Dashboard</button>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleTheme()" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                        <span id="theme-icon">🌙</span>
+                    </button>
+                    <button onclick="toggleAuth()" id="auth-btn" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:from-purple-700 hover:to-indigo-700 transition-all duration-200">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <div id="home-page" class="page active">
+            <!-- Hero Section -->
+            <section class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900"></div>
+                
+                <div class="relative max-w-7xl mx-auto text-center fade-in">
+                    <div class="space-y-8">
+                        <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-100 to-indigo-100 dark:from-purple-900/20 dark:to-indigo-900/20 text-purple-700 dark:text-purple-300 px-6 py-3 rounded-full text-sm font-medium border border-purple-200 dark:border-purple-800">
+                            <span>🚀</span>
+                            <span>Join 250,000+ learners worldwide</span>
+                        </div>
+                        
+                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold">
+                            <span class="bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 bg-clip-text text-transparent">
+                                Learn Without
+                            </span>
+                            <br />
+                            <span class="text-gray-900 dark:text-white">
+                                Limits
+                            </span>
+                        </h1>
+                        
+                        <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                            Master new skills with our premium courses in cooking, medicine, culture, technology, and more. 
+                            Learn from world-class experts at your own pace.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                            <button onclick="showPage('catalog')" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                Start Learning Today →
+                            </button>
+                            <button onclick="showPage('upload')" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-8 py-4 rounded-xl text-lg font-semibold border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300">
+                                Become an Instructor
+                            </button>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">📚</div>
+                                <div class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">10,000+</div>
+                                <div class="text-gray-600 dark:text-gray-400 text-sm mt-1">Total Courses</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">👨‍🏫</div>
+                                <div class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">2,500+</div>
+                                <div class="text-gray-600 dark:text-gray-400 text-sm mt-1">Expert Instructors</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">🎓</div>
+                                <div class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">250,000+</div>
+                                <div class="text-gray-600 dark:text-gray-400 text-sm mt-1">Active Students</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">🏆</div>
+                                <div class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">96%</div>
+                                <div class="text-gray-600 dark:text-gray-400 text-sm mt-1">Success Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section class="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                            Explore Our Categories
+                        </h2>
+                        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                            Discover world-class courses across multiple disciplines, taught by industry experts and verified professionals.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 card-hover cursor-pointer" onclick="showPage('catalog')">
+                            <div class="text-6xl mb-6">👨‍🍳</div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">KalaKitchen</h3>
+                            <p class="text-purple-600 dark:text-purple-400 font-medium mb-4">Culinary Arts & Cooking</p>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6">Master the art of cooking with AI-verified recipes and traditional techniques</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                                <span>📚 2,847 courses</span>
+                                <span>👥 45,000+ students</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 card-hover cursor-pointer" onclick="showPage('catalog')">
+                            <div class="text-6xl mb-6">🏥</div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Medical Sciences</h3>
+                            <p class="text-purple-600 dark:text-purple-400 font-medium mb-4">Healthcare & Medicine</p>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6">Learn medical procedures, anatomy, and healthcare practices from experts</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                                <span>📚 1,234 courses</span>
+                                <span>👥 28,000+ students</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 card-hover cursor-pointer" onclick="showPage('catalog')">
+                            <div class="text-6xl mb-6">🎭</div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Cultural Heritage</h3>
+                            <p class="text-purple-600 dark:text-purple-400 font-medium mb-4">Arts & Traditions</p>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6">Explore world cultures, traditional arts, and historical practices</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                                <span>📚 892 courses</span>
+                                <span>👥 15,000+ students</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 card-hover cursor-pointer" onclick="showPage('catalog')">
+                            <div class="text-6xl mb-6">💻</div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Technology</h3>
+                            <p class="text-purple-600 dark:text-purple-400 font-medium mb-4">Programming & IT</p>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6">Master programming languages, web development, and emerging technologies</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                                <span>📚 3,456 courses</span>
+                                <span>👥 78,000+ students</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 card-hover cursor-pointer" onclick="showPage('catalog')">
+                            <div class="text-6xl mb-6">📊</div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Business</h3>
+                            <p class="text-purple-600 dark:text-purple-400 font-medium mb-4">Entrepreneurship & Finance</p>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6">Learn business strategies, finance, marketing, and leadership skills</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                                <span>📚 1,567 courses</span>
+                                <span>👥 32,000+ students</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 card-hover cursor-pointer" onclick="showPage('catalog')">
+                            <div class="text-6xl mb-6">🎨</div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Creative Arts</h3>
+                            <p class="text-purple-600 dark:text-purple-400 font-medium mb-4">Design & Creativity</p>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6">Unleash your creativity with design, photography, and artistic techniques</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                                <span>📚 987 courses</span>
+                                <span>👥 22,000+ students</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Catalog Page -->
+        <div id="catalog-page" class="page hidden">
+            <div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center mb-12 fade-in">
+                        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                            Learning Catalog
+                        </h1>
+                        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                            Discover verified cultural knowledge through expertly crafted learning experiences
+                        </p>
+                    </div>
+
+                    <!-- Search and Filters -->
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="lg:col-span-2 relative">
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
+                                <input type="text" placeholder="Search learning packs..." class="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            <select class="px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option>All Categories</option>
+                                <option>Tamil Classical Dance</option>
+                                <option>Traditional Medicine</option>
+                                <option>Culinary Traditions</option>
+                            </select>
+                            <select class="px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option>All Levels</option>
+                                <option>Beginner</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Course Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden card-hover">
+                            <div class="relative bg-gradient-to-br from-purple-500 to-indigo-600 h-48 flex items-center justify-center">
+                                <div class="text-6xl">🩰</div>
+                                <div class="absolute top-4 left-4">
+                                    <div class="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
+                                        <span>🛡️</span>
+                                        <span>96%</span>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 right-4">
+                                    <span class="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 px-2 py-1 rounded-full text-xs font-medium">Beginner</span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Bharatanatyam Fundamentals</h3>
+                                <p class="text-sm text-purple-600 dark:text-purple-400 font-medium mb-4">Tamil Classical Dance</p>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Master the basic positions, hand gestures, and movements of this classical dance form.</p>
+                                <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <span>⏰ 4.5 hours</span>
+                                        <span>👥 1,247</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <span class="text-yellow-400">⭐</span>
+                                        <span class="text-yellow-600 dark:text-yellow-400 font-medium">4.9</span>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-indigo-700 transition-all duration-300">
+                                    📚 Start Learning
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden card-hover">
+                            <div class="relative bg-gradient-to-br from-green-500 to-teal-600 h-48 flex items-center justify-center">
+                                <div class="text-6xl">🌿</div>
+                                <div class="absolute top-4 left-4">
+                                    <div class="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
+                                        <span>🛡️</span>
+                                        <span>89%</span>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 right-4">
+                                    <span class="bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400 px-2 py-1 rounded-full text-xs font-medium">Intermediate</span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Traditional Siddha Medicine</h3>
+                                <p class="text-sm text-purple-600 dark:text-purple-400 font-medium mb-4">Traditional Medicine</p>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Learn about ancient medical practices and healing techniques.</p>
+                                <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <span>⏰ 6.2 hours</span>
+                                        <span>👥 856</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <span class="text-yellow-400">⭐</span>
+                                        <span class="text-yellow-600 dark:text-yellow-400 font-medium">4.7</span>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-indigo-700 transition-all duration-300">
+                                    📚 Start Learning
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden card-hover">
+                            <div class="relative bg-gradient-to-br from-orange-500 to-red-600 h-48 flex items-center justify-center">
+                                <div class="text-6xl">🍛</div>
+                                <div class="absolute top-4 left-4">
+                                    <div class="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
+                                        <span>🛡️</span>
+                                        <span>88%</span>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 right-4">
+                                    <span class="bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400 px-2 py-1 rounded-full text-xs font-medium">Intermediate</span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Traditional Cooking Methods</h3>
+                                <p class="text-sm text-purple-600 dark:text-purple-400 font-medium mb-4">Culinary Traditions</p>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Learn authentic cooking techniques passed down through generations.</p>
+                                <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <span>⏰ 5.3 hours</span>
+                                        <span>👥 1,156</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <span class="text-yellow-400">⭐</span>
+                                        <span class="text-yellow-600 dark:text-yellow-400 font-medium">4.5</span>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-indigo-700 transition-all duration-300">
+                                    📚 Start Learning
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Page -->
+        <div id="upload-page" class="page hidden">
+            <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-12 fade-in">
+                        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                            Share Cultural Knowledge
+                        </h1>
+                        <p class="text-xl text-gray-600 dark:text-gray-300">
+                            Upload authentic cultural content for AI verification and community learning
+                        </p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <div class="p-8">
+                            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Upload Your Content</h2>
+                            
+                            <!-- File Upload Zone -->
+                            <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-12 text-center hover:border-purple-400 transition-colors mb-8">
+                                <div class="space-y-4">
+                                    <div class="text-6xl">📁</div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                                            Drag & drop files here
+                                        </h3>
+                                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                            or click to browse your computer
+                                        </p>
+                                        <div class="flex justify-center space-x-4 text-gray-400">
+                                            <span>📄</span>
+                                            <span>🖼️</span>
+                                            <span>🎥</span>
+                                        </div>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                                            Supports: Images, Videos, Documents, PDFs (Max 100MB each)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Form -->
+                            <form class="space-y-6">
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            Title *
+                                        </label>
+                                        <input type="text" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., Bharatanatyam Basic Positions">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            Category *
+                                        </label>
+                                        <select required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                            <option value="">Select a category</option>
+                                            <option>Tamil Classical Dance</option>
+                                            <option>Traditional Medicine</option>
+                                            <option>Religious Rituals</option>
+                                            <option>Folk Arts</option>
+                                            <option>Culinary Traditions</option>
+                                            <option>Musical Heritage</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Description *
+                                    </label>
+                                    <textarea required rows="4" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Provide detailed information about the cultural practice..."></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Attribution/Source *
+                                    </label>
+                                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., Learned from Guru Rajesh Kumar">
+                                </div>
+
+                                <!-- Consent -->
+                                <div class="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-6">
+                                    <div class="flex items-start space-x-3">
+                                        <span class="text-purple-600 dark:text-purple-400 text-xl">ℹ️</span>
+                                        <div class="space-y-4">
+                                            <h3 class="font-semibold text-purple-900 dark:text-purple-100">
+                                                Content Submission Agreement
+                                            </h3>
+                                            <div class="text-sm text-purple-800 dark:text-purple-200 space-y-2">
+                                                <p>By submitting this content, you agree that:</p>
+                                                <ul class="list-disc list-inside space-y-1 ml-4">
+                                                    <li>The content is authentic and accurately represents cultural practices</li>
+                                                    <li>You have the right to share this knowledge publicly</li>
+                                                    <li>The content will undergo AI-powered authenticity verification</li>
+                                                    <li>Verified content may be transformed into structured learning packs</li>
+                                                </ul>
+                                            </div>
+                                            <label class="flex items-center space-x-3">
+                                                <input type="checkbox" required class="rounded border-purple-300 text-purple-600 focus:ring-purple-500">
+                                                <span class="text-purple-900 dark:text-purple-100 font-medium">
+                                                    I provide my consent and agree to the terms above *
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-end">
+                                    <button type="submit" onclick="showSuccessMessage()" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-indigo-700 transition-all duration-300">
+                                        Submit for Verification
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page hidden">
+            <div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-8 fade-in">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8">
+                            <div class="flex items-start space-x-6">
+                                <div class="w-24 h-24 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-3xl font-bold">D</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                                        Welcome back, Demo User!
+                                    </h1>
+                                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                        demo@learner.com
+                                    </p>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="bg-purple-100 dark:bg-purple-900/20 text-purple-800 dark:text-purple-400 px-3 py-1 rounded-full text-sm font-medium">
+                                            Learner
+                                        </span>
+                                        <span class="text-gray-500 dark:text-gray-400 text-sm">
+                                            Member since January 2024
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Total Submissions</p>
+                                    <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">12</p>
+                                </div>
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center text-2xl">📊</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Verified Content</p>
+                                    <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">8</p>
+                                </div>
+                                <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center text-2xl">✅</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Total Views</p>
+                                    <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">2,726</p>
+                                </div>
+                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center text-2xl">👁️</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Avg. Authenticity</p>
+                                    <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">92%</p>
+                                </div>
+                                <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-lg flex items-center justify-center text-2xl">🏆</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Submissions -->
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Recent Submissions</h2>
+                        </div>
+                        <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <div class="p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-3 mb-2">
+                                            <h3 class="font-medium text-gray-900 dark:text-white">Bharatanatyam Hand Gestures</h3>
+                                            <span class="text-xl">✅</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Tamil Classical Dance</p>
+                                        <div class="flex items-center space-x-6">
+                                            <span class="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 px-2 py-1 rounded-full text-xs font-medium">Verified</span>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-20 bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                                    <div class="h-2 rounded-full bg-green-500" style="width: 94%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-600 dark:text-gray-400">94%</span>
+                                            </div>
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">2 days ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-3 mb-2">
+                                            <h3 class="font-medium text-gray-900 dark:text-white">Traditional Siddha Medicine</h3>
+                                            <span class="text-xl">⚠️</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Traditional Medicine</p>
+                                        <div class="flex items-center space-x-6">
+                                            <span class="bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400 px-2 py-1 rounded-full text-xs font-medium">Review</span>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-20 bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                                    <div class="h-2 rounded-full bg-yellow-500" style="width: 78%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-600 dark:text-gray-400">78%</span>
+                                            </div>
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">5 days ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-3 mb-2">
+                                            <h3 class="font-medium text-gray-900 dark:text-white">Tamil Folk Songs</h3>
+                                            <span class="text-xl">⏳</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Musical Heritage</p>
+                                        <div class="flex items-center space-x-6">
+                                            <span class="bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400 px-2 py-1 rounded-full text-xs font-medium">Processing</span>
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">1 week ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentUser = null;
+        let isDarkMode = false;
+
+        // Theme toggle
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark', isDarkMode);
+            document.getElementById('theme-icon').textContent = isDarkMode ? '☀️' : '🌙';
+        }
+
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId + '-page');
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                targetPage.classList.add('active');
+                
+                // Add fade-in animation
+                setTimeout(() => {
+                    targetPage.classList.add('fade-in');
+                }, 50);
+            }
+        }
+
+        // Auth toggle
+        function toggleAuth() {
+            const authBtn = document.getElementById('auth-btn');
+            if (currentUser) {
+                // Logout
+                currentUser = null;
+                authBtn.textContent = 'Get Started';
+                showPage('home');
+            } else {
+                // Login as demo user
+                currentUser = { name: 'Demo User', email: 'demo@learner.com', role: 'learner' };
+                authBtn.textContent = 'Logout';
+                showPage('dashboard');
+            }
+        }
+
+        // Success message for upload
+        function showSuccessMessage() {
+            event.preventDefault();
+            alert('🎉 Content uploaded successfully! Your submission is now being processed for authenticity verification.');
+            showPage('dashboard');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+        });
+    </script>
 </body>
 </html>
