@@ -1,45 +1,49 @@
-# 🏛️ Thadam - Tamil Cultural Heritage Preservation Platform
+# 🎓 EduPlatform - Universal Learning Marketplace
 
 <div align="center">
   <img src="https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React" />
   <img src="https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-3.3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/Framer_Motion-10.0-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" />
+  <img src="https://img.shields.io/badge/Framer_Motion-12.0-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" />
   <img src="https://img.shields.io/badge/Vite-4.4-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
 </div>
 
 <div align="center">
-  <h3>🌟 AI-Powered Cultural Knowledge Preservation Platform 🌟</h3>
-  <p><strong>Thadam</strong> (தடம் - "footprint" in Tamil) is a premium full-stack platform dedicated to preserving and authenticating Tamil cultural knowledge through advanced AI verification.</p>
+  <h3>🌟 Premium Multi-Category Learning Platform 🌟</h3>
+  <p><strong>EduPlatform</strong> is a comprehensive online learning marketplace offering courses across multiple disciplines with premium UI/UX and advanced features.</p>
 </div>
 
 ---
 
 ## 🎯 **Key Features**
 
-### 🤖 **AI-Powered Verification**
-- **Multi-modal Content Analysis** - Text, image, and video verification
-- **Authenticity Scoring** - 0-100% accuracy rating with visual badges
-- **Smart Content Recognition** - Automatic categorization and tagging
-- **Cultural Context Validation** - Cross-references with authentic sources
+### 📚 **Multi-Category Learning**
+- **KalaKitchen** - Culinary arts and cooking mastery
+- **Medical Sciences** - Healthcare and medical procedures
+- **Cultural Heritage** - Arts, traditions, and cultural practices
+- **Technology** - Programming, web development, and IT
+- **Business** - Entrepreneurship, finance, and leadership
+- **Creative Arts** - Design, photography, and artistic techniques
 
 ### 👥 **Dual User Experience**
-- **📤 Uploaders** - Contribute cultural knowledge with guided workflows
-- **📚 Learners** - Access verified content through structured learning packs
-- **🏆 Gamification** - Achievement system with progress tracking
+- **🎓 Learners** - Browse, purchase, and take courses with progress tracking
+- **👨‍🏫 Instructors** - Create and upload educational content
+- **🛒 Shopping Cart** - Seamless course purchasing experience
+- **⭐ Reviews & Ratings** - Community-driven course evaluation
 
 ### 🎨 **Premium UI/UX Design**
-- **Modern Glassmorphism** - Sleek cards with backdrop blur effects
-- **Gradient Aesthetics** - Beautiful indigo/purple color schemes
+- **Modern Design System** - Clean, professional interface
 - **Dark/Light Mode** - Seamless theme switching
 - **Responsive Design** - Perfect on desktop, tablet, and mobile
 - **Smooth Animations** - Framer Motion throughout the interface
+- **Glassmorphism Effects** - Modern visual aesthetics
 
-### 📖 **Learning Platform Features**
-- **Netflix-style Catalog** - Browse courses with rich preview cards
-- **Interactive Learning** - Video players, practice sessions, quizzes
-- **Progress Tracking** - Visual completion indicators
-- **Search & Filter** - Find content by category, difficulty, authenticity
+### 🔍 **Advanced Features**
+- **Smart Search** - Find courses across all categories
+- **Category Filtering** - Browse by subject, difficulty, price
+- **Progress Tracking** - Monitor learning advancement
+- **User Profiles** - Personalized learning dashboard
+- **Course Previews** - Rich media course information
 
 ---
 
@@ -51,12 +55,14 @@ src/
 ├── components/
 │   ├── ui/                 # Reusable UI components
 │   ├── features/           # Feature-specific components
-│   └── layout/             # Layout components
+│   ├── layout/             # Navigation and layout
+│   └── recipe/             # Course/content components
 ├── pages/                  # Main application pages
 ├── contexts/               # React Context providers
 ├── hooks/                  # Custom React hooks
 ├── services/               # API communication layer
-└── utils/                  # Helper functions
+├── data/                   # Mock data and types
+└── types/                  # TypeScript definitions
 ```
 
 ### **Technology Stack**
@@ -64,7 +70,7 @@ src/
 - **🔷 TypeScript** - Full type safety and developer experience
 - **🎨 Tailwind CSS** - Utility-first styling with custom design system
 - **✨ Framer Motion** - Smooth animations and transitions
-- **🧭 React Router** - Client-side routing
+- **🧭 React Router** - Client-side routing with nested routes
 - **🎯 Heroicons** - Beautiful, consistent iconography
 - **📱 React Dropzone** - Drag-and-drop file uploads
 - **⚡ Vite** - Lightning-fast development and building
@@ -82,8 +88,8 @@ src/
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/YOUR_USERNAME/thadam-cultural-platform.git
-cd thadam-cultural-platform
+git clone https://github.com/YOUR_USERNAME/eduplatform.git
+cd eduplatform
 ```
 
 2. **Install dependencies**
@@ -109,56 +115,77 @@ npm run preview
 
 ---
 
-## 📱 **Application Screenshots**
+## 📱 **Application Features**
 
 ### **🏠 Landing Page**
-- Hero section with role selection
-- Feature showcase with modern cards
+- Hero section with category showcase
+- Featured courses and instructors
 - Statistics and testimonials
-- Call-to-action sections
-
-### **📤 Upload Interface**
-- Multi-step guided upload process
-- Drag-and-drop file zone with visual feedback
-- Form validation and progress tracking
-- AI verification status display
-
-### **📚 Learning Catalog**
-- Grid layout with course cards
-- Search and filter functionality
-- Authenticity badges and ratings
 - Responsive design for all devices
 
-### **🎓 Learning Experience**
-- Video player with lesson navigation
-- Progress tracking and completion
-- Interactive quizzes and assessments
-- Mobile-optimized interface
+### **📚 Course Catalog**
+- Grid layout with course cards
+- Advanced search and filtering
+- Category-based browsing
+- Price and rating information
+
+### **🛒 Shopping Experience**
+- Add courses to cart
+- Secure checkout process
+- Purchase history tracking
+- Instant course access
+
+### **👤 User Dashboard**
+- Personal learning progress
+- Purchased courses library
+- Profile management
+- Achievement tracking
+
+### **🎓 Learning Interface**
+- Video player with controls
+- Progress tracking
+- Course materials access
+- Interactive elements
 
 ---
 
-## 🎯 **Core Functionality**
+## 🎯 **Course Categories**
 
-### **📊 AI Authenticity Scoring**
-- **≥80%** - ✅ Verified and published as learning pack
-- **70-79%** - ⏳ Under manual review by cultural experts
-- **<70%** - ❌ Requires improvement or additional sources
+### **👨‍🍳 KalaKitchen (Culinary Arts)**
+- **Professional Cooking** - Techniques from world-class chefs
+- **International Cuisines** - Italian, Japanese, French, and more
+- **Baking & Pastry** - From basics to advanced techniques
+- **Healthy Cooking** - Nutritious and delicious meals
 
-### **🏛️ Cultural Categories**
-- **💃 Tamil Classical Dance** - Bharatanatyam, Kuchipudi, etc.
-- **🌿 Traditional Medicine** - Siddha, Ayurveda practices
-- **🙏 Religious Rituals** - Temple ceremonies, festivals
-- **🎨 Folk Arts** - Traditional crafts and performances
-- **🍛 Culinary Traditions** - Authentic recipes and techniques
-- **🎵 Musical Heritage** - Classical and folk music
-- **🏛️ Architectural Styles** - Temple and traditional architecture
-- **📚 Literary Works** - Classical Tamil literature
+### **🏥 Medical Sciences**
+- **Anatomy & Physiology** - Human body systems
+- **Medical Procedures** - Clinical skills and techniques
+- **Healthcare Practices** - Patient care and safety
+- **Medical Technology** - Modern diagnostic tools
 
-### **🔐 Privacy & Ethics**
-- **Consent-based uploads** with clear terms
-- **Proper attribution** maintained for all contributors
-- **Medical disclaimers** for traditional medicine content
-- **Cultural sensitivity** respected throughout
+### **🎭 Cultural Heritage**
+- **Traditional Arts** - Folk arts and cultural practices
+- **Historical Studies** - Cultural preservation and education
+- **Language Learning** - Cultural language immersion
+- **Religious Studies** - Spiritual and cultural traditions
+
+### **💻 Technology**
+- **Web Development** - Frontend and backend technologies
+- **Programming Languages** - Python, JavaScript, Java, and more
+- **Data Science** - Analytics and machine learning
+- **Cybersecurity** - Digital security and privacy
+
+### **📊 Business**
+- **Entrepreneurship** - Starting and growing businesses
+- **Digital Marketing** - Online marketing strategies
+- **Finance & Accounting** - Financial management skills
+- **Leadership** - Management and team building
+
+### **🎨 Creative Arts**
+- **Graphic Design** - Visual design and branding
+- **Photography** - Professional photography techniques
+- **Digital Art** - Digital illustration and design
+- **Music Production** - Audio creation and editing
 
 ---
 
@@ -166,7 +193,7 @@ npm run preview
 
 ### **Project Structure**
 ```
-thadam-cultural-platform/
+eduplatform/
 ├── public/                 # Static assets
 ├── src/
 │   ├── components/         # React components
@@ -174,7 +201,8 @@ thadam-cultural-platform/
 │   ├── contexts/          # React contexts
 │   ├── hooks/             # Custom hooks
 │   ├── services/          # API services
-│   └── utils/             # Utility functions
+│   ├── data/              # Mock data
+│   └── types/             # TypeScript types
 ├── package.json           # Dependencies and scripts
 ├── tailwind.config.js     # Tailwind configuration
 ├── vite.config.ts         # Vite configuration
@@ -186,29 +214,29 @@ thadam-cultural-platform/
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
-- `npm run type-check` - Run TypeScript checks
 
-### **Code Quality**
-- **ESLint** - Code linting and formatting
-- **TypeScript** - Static type checking
-- **Prettier** - Code formatting
-- **Husky** - Git hooks for quality assurance
+### **Key Components**
+- **CourseCard** - Individual course display
+- **CategoryPage** - Category-specific course listings
+- **SearchResults** - Search functionality
+- **UserDashboard** - Personal learning space
+- **ShoppingCart** - Course purchasing flow
 
 ---
 
 ## 🌟 **Features Showcase**
 
 ### **🎨 Modern Design System**
-- Glassmorphism effects with backdrop blur
-- Gradient backgrounds and smooth transitions
-- Consistent spacing and typography
-- Accessible color contrasts and focus states
+- Consistent color palette and typography
+- Responsive grid layouts
+- Smooth hover effects and transitions
+- Accessible design patterns
 
-### **📱 Responsive Experience**
-- Mobile-first design approach
-- Tablet and desktop optimizations
+### **📱 Mobile-First Experience**
 - Touch-friendly interactions
+- Optimized layouts for all screen sizes
 - Progressive web app capabilities
+- Fast loading and smooth performance
 
 ### **⚡ Performance Optimized**
 - Code splitting and lazy loading
@@ -216,11 +244,17 @@ thadam-cultural-platform/
 - Fast development with Vite
 - Production-ready builds
 
+### **🔐 User Management**
+- Secure authentication system
+- Role-based access control
+- Profile customization
+- Learning progress tracking
+
 ---
 
 ## 🤝 **Contributing**
 
-We welcome contributions to preserve and share Tamil cultural heritage! Here's how you can help:
+We welcome contributions to improve the learning platform! Here's how you can help:
 
 ### **For Developers**
 1. **Fork** the repository
@@ -229,17 +263,17 @@ We welcome contributions to preserve and share Tamil cultural heritage! Here's h
 4. **Push** to the branch (`git push origin feature/amazing-feature`)
 5. **Open** a Pull Request
 
-### **For Cultural Experts**
-- Share authentic cultural knowledge
-- Review and validate submitted content
-- Provide feedback on cultural accuracy
+### **For Educators**
+- Share course ideas and content
+- Provide feedback on learning experiences
 - Suggest new categories and features
+- Help improve course quality
 
 ### **Code of Conduct**
-- Respect cultural sensitivity and authenticity
 - Follow inclusive and welcoming practices
 - Maintain high code quality standards
 - Document changes and features clearly
+- Respect intellectual property rights
 
 ---
 
@@ -251,25 +285,25 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 **Acknowledgments**
 
-- **Tamil Cultural Experts** - For sharing authentic knowledge
+- **Educational Experts** - For sharing knowledge and expertise
 - **Open Source Community** - For amazing tools and libraries
 - **Design Inspiration** - Udemy, Coursera, and modern learning platforms
-- **Cultural Preservation Organizations** - For their important work
+- **Contributors** - Everyone who helps improve the platform
 
 ---
 
 ## 📞 **Support & Contact**
 
-- **🐛 Bug Reports** - [Create an issue](https://github.com/YOUR_USERNAME/thadam-cultural-platform/issues)
-- **💡 Feature Requests** - [Start a discussion](https://github.com/YOUR_USERNAME/thadam-cultural-platform/discussions)
-- **📧 Email** - your-email@example.com
-- **🐦 Twitter** - [@your_handle](https://twitter.com/your_handle)
+- **🐛 Bug Reports** - [Create an issue](https://github.com/YOUR_USERNAME/eduplatform/issues)
+- **💡 Feature Requests** - [Start a discussion](https://github.com/YOUR_USERNAME/eduplatform/discussions)
+- **📧 Email** - support@eduplatform.com
+- **🐦 Twitter** - [@eduplatform](https://twitter.com/eduplatform)
 
 ---
 
 <div align="center">
-  <h3>🏆 Built for Cultural Preservation Hackathon 2024</h3>
-  <p><em>Preserving Tamil heritage through technology</em> 🕉️</p>
+  <h3>🏆 Built for Modern Online Learning</h3>
+  <p><em>Empowering learners worldwide through technology</em> 🚀</p>
   
   **⭐ Star this repository if you found it helpful!**
 </div>
