@@ -5,39 +5,22 @@ interface CardProps {
   children: React.ReactNode;
   className?: string;
   hover?: boolean;
-  gradient?: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ 
-  children, 
-  className = '', 
-  hover = false,
-  gradient = false 
-}) => {
-  const baseClasses = `rounded-2xl border transition-all duration-300 ${
-    gradient 
-      ? 'bg-gradient-to-br from-white/90 to-white/70 dark:from-dark-800/90 dark:to-dark-900/70 backdrop-blur-sm border-white/20 dark:border-dark-700/50' 
-      : 'bg-white dark:bg-dark-800 border-dark-200 dark:border-dark-700'
-  }`;
-
-  const hoverClasses = hover ? 'hover:shadow-2xl hover:-translate-y-1 hover:border-primary-200 dark:hover:border-primary-800' : '';
-
-  if (hover) {
-    return (
-      <motion.div
-        whileHover={{ y: -4, scale: 1.02 }}
-        transition={{ duration: 0.2 }}
-        className={`${baseClasses} ${hoverClasses} ${className}`}
-      >
-        {children}
-      </motion.div>
-    );
-  }
+const Card: React.FC<CardProps> = ({ children, className = '', hover = false }) => {
+  const Component = hover ? motion.div : 'div';
+  const hoverProps = hover ? {
+    whileHover: { y: -4, scale: 1.02 },
+    transition: { duration: 0.2 }
+  } : {};
 
   return (
-    <div className={`${baseClasses} ${className}`}>
+    <Component
+      className={`bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 transition-all duration-300 ${hover ? 'hover:shadow-2xl hover:border-indigo-200 dark:hover:border-indigo-800' : ''} ${className}`}
+      {...hoverProps}
+    >
       {children}
-    </div>
+    </Component>
   );
 };
 

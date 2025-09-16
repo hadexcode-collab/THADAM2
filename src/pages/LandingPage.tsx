@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/ui/Button';
@@ -212,38 +211,36 @@ const LandingPage = () => {
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Link to={`/category/${category.id}`}>
-                  <Card hover className="group relative overflow-hidden h-full">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
-                    <div className="relative p-8">
-                      <div className="text-6xl mb-6">{category.icon}</div>
-                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                        {category.title}
-                      </h3>
-                      <p className="text-indigo-600 dark:text-indigo-400 font-medium mb-4">
-                        {category.subtitle}
-                      </p>
-                      <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                        {category.description}
-                      </p>
-                      <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
-                        <div className="flex items-center space-x-4">
-                          <div className="flex items-center space-x-1">
-                            <span>📚</span>
-                            <span>{category.courses} courses</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <span>👥</span>
-                            <span>{category.students} students</span>
-                          </div>
+                <Card hover className="group relative overflow-hidden h-full">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
+                  <div className="relative p-8">
+                    <div className="text-6xl mb-6">{category.icon}</div>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      {category.title}
+                    </h3>
+                    <p className="text-indigo-600 dark:text-indigo-400 font-medium mb-4">
+                      {category.subtitle}
+                    </p>
+                    <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                      {category.description}
+                    </p>
+                    <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-1">
+                          <span>📚</span>
+                          <span>{category.courses} courses</span>
                         </div>
-                        <div className="text-indigo-600 dark:text-indigo-400 group-hover:translate-x-1 transition-transform">
-                          →
+                        <div className="flex items-center space-x-1">
+                          <span>👥</span>
+                          <span>{category.students} students</span>
                         </div>
                       </div>
+                      <div className="text-indigo-600 dark:text-indigo-400 group-hover:translate-x-1 transition-transform">
+                        →
+                      </div>
                     </div>
-                  </Card>
-                </Link>
+                  </div>
+                </Card>
               </motion.div>
             ))}
           </div>

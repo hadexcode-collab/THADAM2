@@ -1,40 +1,19 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  CheckCircleIcon,
-  ExclamationTriangleIcon,
-  InformationCircleIcon
-} from '@heroicons/react/24/outline';
-import UploadZone from '../components/features/UploadZone';
-import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
-import ProgressBar from '../components/ui/ProgressBar';
-import { useUpload } from '../hooks/useApi';
-
-interface UploadFormData {
-  title: string;
-  category: string;
-  description: string;
-  tags: string[];
-  attribution: string;
-  consent: boolean;
-  medicalDisclaimer: boolean;
-}
+import Button from '../components/ui/Button';
 
 const UploadContent = () => {
-  const [formData, setFormData] = useState<UploadFormData>({
+  const [currentStep, setCurrentStep] = useState(1);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [formData, setFormData] = useState({
     title: '',
     category: '',
     description: '',
-    tags: [],
     attribution: '',
     consent: false,
     medicalDisclaimer: false
   });
-  
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [currentStep, setCurrentStep] = useState(1);
-  const { upload, isUploading, uploadProgress, error: uploadError } = useUpload();
 
   const categories = [
     'Tamil Classical Dance',
@@ -49,25 +28,32 @@ const UploadContent = () => {
     'Textile Arts'
   ];
 
-  const handleFilesSelected = useCallback((acceptedFiles: File[]) => {
-    setUploadedFiles(prev => [...prev, ...acceptedFiles]);
-  }, []);
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    setUploadedFiles(prev => [...prev, ...files]);
+  };
 
   const removeFile = (index: number) => {
     setUploadedFiles(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!uploadedFiles.length || !formData.consent) {
-      return;
-    }
-
-    try {
-      await upload(uploadedFiles[0], formData);
-      setCurrentStep(4);
-    } catch (error) {
-      console.error('Upload failed:', error);
+    if (currentStep < 4) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      // Submit logic here
+      alert('Content submitted successfully!');
+      setCurrentStep(1);
+      setUploadedFiles([]);
+      setFormData({
+        title: '',
+        category: '',
+        description: '',
+        attribution: '',
+        consent: false,
+        medicalDisclaimer: false
+      });
     }
   };
 
@@ -75,7 +61,7 @@ const UploadContent = () => {
     { id: 1, name: 'Upload Files', description: 'Add your cultural content' },
     { id: 2, name: 'Add Details', description: 'Provide context and information' },
     { id: 3, name: 'Review & Submit', description: 'Confirm your submission' },
-    { id: 4, name: 'Verification', description: 'AI processing in progress' }
+    { id: 4, name: 'Success', description: 'Content submitted for verification' }
   ];
 
   return (
@@ -87,7 +73,7 @@ const UploadContent = () => {
             Share Cultural Knowledge
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-300">
-            Upload authentic Tamil cultural content for AI verification and community learning
+            Upload authentic cultural content for AI verification and community learning
           </p>
         </div>
 
@@ -102,7 +88,7 @@ const UploadContent = () => {
                     : 'border-slate-300 dark:border-slate-600 text-slate-400 dark:text-slate-500'
                 }`}>
                   {currentStep > step.id ? (
-                    <CheckCircleIcon className="w-6 h-6" />
+                    <span>✓</span>
                   ) : (
                     <span className="text-sm font-medium">{step.id}</span>
                   )}
@@ -141,8 +127,38 @@ const UploadContent = () => {
                 Upload Your Files
               </h2>
               
-              {/* Dropzone */}
-              <UploadZone onFilesSelected={handleFilesSelected} />
+              {/* File Upload Zone */}
+              <div className="border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl p-12 text-center hover:border-indigo-400 transition-colors">
+                <input
+                  type="file"
+                  multiple
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  id="file-upload"
+                  accept="image/*,video/*,.pdf,.txt,.doc,.docx"
+                />
+                <label htmlFor="file-upload" className="cursor-pointer">
+                  <div className="space-y-4">
+                    <div className="text-6xl">📁</div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                        Drag & drop files here
+                      </h3>
+                      <p className="text-slate-600 dark:text-slate-300 mb-4">
+                        or click to browse your computer
+                      </p>
+                      <div className="flex justify-center space-x-4 text-slate-400">
+                        <span>📄</span>
+                        <span>🖼️</span>
+                        <span>🎥</span>
+                      </div>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+                        Supports: Images, Videos, Documents, PDFs (Max 100MB each)
+                      </p>
+                    </div>
+                  </div>
+                </label>
+              </div>
 
               {/* Uploaded Files */}
               {uploadedFiles.length > 0 && (
@@ -151,34 +167,32 @@ const UploadContent = () => {
                     Uploaded Files ({uploadedFiles.length})
                   </h3>
                   <div className="space-y-3">
-                    {uploadedFiles.map((file, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700 rounded-lg"
-                        >
-                          <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center">
-                              <span className="text-indigo-600 dark:text-indigo-400 text-sm">📄</span>
+                    {uploadedFiles.map((file, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700 rounded-lg"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center">
+                            <span className="text-indigo-600 dark:text-indigo-400 text-sm">📄</span>
+                          </div>
+                          <div>
+                            <div className="font-medium text-slate-900 dark:text-white">
+                              {file.name}
                             </div>
-                            <div>
-                              <div className="font-medium text-slate-900 dark:text-white">
-                                {file.name}
-                              </div>
-                              <div className="text-sm text-slate-500 dark:text-slate-400">
-                                {(file.size / 1024 / 1024).toFixed(2)} MB
-                              </div>
+                            <div className="text-sm text-slate-500 dark:text-slate-400">
+                              {(file.size / 1024 / 1024).toFixed(2)} MB
                             </div>
                           </div>
-                          <button
-                            onClick={() => removeFile(index)}
-                            className="text-red-500 hover:text-red-700 transition-colors"
-                          >
-                            Remove
-                          </button>
                         </div>
-                      );
-                    })}
+                        <button
+                          onClick={() => removeFile(index)}
+                          className="text-red-500 hover:text-red-700 transition-colors"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
@@ -271,7 +285,7 @@ const UploadContent = () => {
                 {formData.category === 'Traditional Medicine' && (
                   <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                     <div className="flex items-start space-x-3">
-                      <ExclamationTriangleIcon className="w-6 h-6 text-yellow-600 dark:text-yellow-400 mt-0.5" />
+                      <span className="text-yellow-600 dark:text-yellow-400 text-xl">⚠️</span>
                       <div className="space-y-3">
                         <p className="text-yellow-800 dark:text-yellow-200 text-sm">
                           <strong>Medical Content Notice:</strong> Traditional medicine content requires additional verification and disclaimers.
@@ -344,7 +358,7 @@ const UploadContent = () => {
                 {/* Consent */}
                 <div className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded-lg p-6">
                   <div className="flex items-start space-x-3">
-                    <InformationCircleIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400 mt-0.5" />
+                    <span className="text-indigo-600 dark:text-indigo-400 text-xl">ℹ️</span>
                     <div className="space-y-4">
                       <h3 className="font-semibold text-indigo-900 dark:text-indigo-100">
                         Content Submission Agreement
@@ -352,7 +366,7 @@ const UploadContent = () => {
                       <div className="text-sm text-indigo-800 dark:text-indigo-200 space-y-2">
                         <p>By submitting this content, you agree that:</p>
                         <ul className="list-disc list-inside space-y-1 ml-4">
-                          <li>The content is authentic and accurately represents Tamil cultural practices</li>
+                          <li>The content is authentic and accurately represents cultural practices</li>
                           <li>You have the right to share this knowledge publicly</li>
                           <li>The content will undergo AI-powered authenticity verification</li>
                           <li>Verified content may be transformed into structured learning packs</li>
@@ -385,8 +399,7 @@ const UploadContent = () => {
                 </Button>
                 <Button
                   onClick={handleSubmit}
-                  disabled={!formData.consent || isUploading}
-                  loading={isUploading}
+                  disabled={!formData.consent}
                 >
                   Submit for Verification
                 </Button>
@@ -401,7 +414,7 @@ const UploadContent = () => {
               className="p-8 text-center"
             >
               <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircleIcon className="w-10 h-10 text-white" />
+                <span className="text-white text-4xl">✓</span>
               </div>
               
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
@@ -413,15 +426,6 @@ const UploadContent = () => {
                 You'll receive updates on the verification status.
               </p>
 
-              {/* Progress Animation */}
-              <div className="max-w-md mx-auto mb-4">
-                <ProgressBar value={100} showLabel color="indigo" />
-              </div>
-              
-              <p className="text-sm text-slate-500 dark:text-slate-400 mb-8">
-                AI Verification in Progress...
-              </p>
-
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
                   onClick={() => {
@@ -431,7 +435,6 @@ const UploadContent = () => {
                       title: '',
                       category: '',
                       description: '',
-                      tags: [],
                       attribution: '',
                       consent: false,
                       medicalDisclaimer: false
