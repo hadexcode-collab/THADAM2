@@ -20,7 +20,8 @@ export const useTheme = () => {
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
-      return (localStorage.getItem('theme') as Theme) || 'light';
+      const stored = localStorage.getItem('recipehub_theme') as Theme;
+      return stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     }
     return 'light';
   });
@@ -29,7 +30,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
-    localStorage.setItem('theme', theme);
+    localStorage.setItem('recipehub_theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {

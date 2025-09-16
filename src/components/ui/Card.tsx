@@ -14,13 +14,13 @@ const Card: React.FC<CardProps> = ({
   hover = false,
   gradient = false 
 }) => {
-  const baseClasses = `rounded-xl border transition-all duration-300 ${
+  const baseClasses = `rounded-2xl border transition-all duration-300 ${
     gradient 
-      ? 'bg-gradient-to-br from-white/80 to-slate-50/80 dark:from-slate-800/80 dark:to-slate-900/80 backdrop-blur-sm border-white/20 dark:border-slate-700/50' 
-      : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'
+      ? 'bg-gradient-to-br from-white/90 to-white/70 dark:from-dark-800/90 dark:to-dark-900/70 backdrop-blur-sm border-white/20 dark:border-dark-700/50' 
+      : 'bg-white dark:bg-dark-800 border-dark-200 dark:border-dark-700'
   }`;
 
-  const hoverClasses = hover ? 'hover:shadow-xl hover:-translate-y-1 hover:border-indigo-200 dark:hover:border-indigo-800' : '';
+  const hoverClasses = hover ? 'hover:shadow-2xl hover:-translate-y-1 hover:border-primary-200 dark:hover:border-primary-800' : '';
 
   if (hover) {
     return (
