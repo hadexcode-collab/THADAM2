@@ -118,7 +118,7 @@ const PackCard: React.FC<PackCardProps> = ({ pack, index = 0 }) => {
 
           {/* CTA Button */}
           <Link
-            to={`/pack/${pack.id}`}
+            to={`/course/${pack.id}`}
             className="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg"
           >
             <BookOpenIcon className="w-5 h-5" />

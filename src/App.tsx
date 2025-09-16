@@ -9,7 +9,6 @@ import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import UploadContent from './pages/UploadContent';
 import PackCatalog from './pages/PackCatalog';
-import PackViewer from './pages/PackViewer';
 import Profile from './pages/Profile';
 import CategoryPage from './pages/CategoryPage';
 import CoursePage from './pages/CoursePage';
@@ -30,7 +29,7 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/upload" element={<UploadContent />} />
                   <Route path="/catalog" element={<PackCatalog />} />
-                  <Route path="/pack/:id" element={<PackViewer />} />
+                  <Route path="/course/:id" element={<CoursePage />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/category/:category" element={<CategoryPage />} />
                   <Route path="/course/:id" element={<CoursePage />} />
