@@ -1,5 +1,4 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { AlertCircle } from 'lucide-react';
 
 interface Props {
   children: ReactNode;
@@ -28,7 +27,7 @@ class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="min-h-screen bg-gray-900 flex items-center justify-center">
           <div className="bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4 text-center">
-            <AlertCircle className="h-16 w-16 text-red-400 mx-auto mb-4" />
+            <div className="h-16 w-16 bg-red-400 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl">!</div>
             <h2 className="text-xl font-bold text-white mb-2">Something went wrong</h2>
             <p className="text-gray-400 mb-4">
               We encountered an unexpected error. Please refresh the page and try again.

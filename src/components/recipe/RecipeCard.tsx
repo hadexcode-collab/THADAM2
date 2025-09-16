@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Clock, Users, Star, Heart, ShoppingCart } from 'lucide-react';
 import { Recipe } from '../../types';
 import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -57,7 +56,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, index = 0 }) => {
 
             {/* Favorite button */}
             <button className="absolute top-4 right-4 w-8 h-8 bg-white/90 dark:bg-dark-800/90 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-dark-800 transition-colors">
-              <Heart className="w-4 h-4 text-dark-600 dark:text-dark-300" />
+              <span className="text-red-500">❤️</span>
             </button>
 
             {/* Difficulty badge */}
@@ -102,16 +101,16 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, index = 0 }) => {
             <div className="flex items-center justify-between text-sm text-dark-500 dark:text-dark-400 mb-4">
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-1">
-                  <Clock className="w-4 h-4" />
+                  <span>⏰</span>
                   <span>{recipe.cookingTime}min</span>
                 </div>
                 <div className="flex items-center space-x-1">
-                  <Users className="w-4 h-4" />
+                  <span>👥</span>
                   <span>{recipe.servings}</span>
                 </div>
               </div>
               <div className="flex items-center space-x-1">
-                <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                <span className="text-yellow-400">⭐</span>
                 <span className="font-medium">{recipe.rating}</span>
                 <span>({recipe.reviewCount})</span>
               </div>
@@ -141,7 +140,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, index = 0 }) => {
                 >
                   {isInCart ? (
                     <>
-                      <ShoppingCart className="w-4 h-4 mr-1" />
+                      <span className="mr-1">🛒</span>
                       In Cart
                     </>
                   ) : (

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChefHat, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const footerLinks = {
@@ -25,10 +24,10 @@ const Footer: React.FC = () => {
   };
 
   const socialLinks = [
-    { name: 'Facebook', icon: Facebook, href: '#' },
-    { name: 'Twitter', icon: Twitter, href: '#' },
-    { name: 'Instagram', icon: Instagram, href: '#' },
-    { name: 'YouTube', icon: Youtube, href: '#' },
+    { name: 'Facebook', icon: '📘', href: '#' },
+    { name: 'Twitter', icon: '🐦', href: '#' },
+    { name: 'Instagram', icon: '📷', href: '#' },
+    { name: 'YouTube', icon: '📺', href: '#' },
   ];
 
   return (
@@ -39,7 +38,7 @@ const Footer: React.FC = () => {
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-3 mb-4">
               <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
-                <ChefHat className="w-6 h-6 text-white" />
+                <span className="text-white">🍳</span>
               </div>
               <div>
                 <h1 className="text-xl font-display font-bold">RecipeHub</h1>
@@ -57,7 +56,7 @@ const Footer: React.FC = () => {
                   href={social.href}
                   className="w-10 h-10 bg-dark-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors"
                 >
-                  <social.icon className="w-5 h-5" />
+                  <span className="text-lg">{social.icon}</span>
                 </a>
               ))}
             </div>

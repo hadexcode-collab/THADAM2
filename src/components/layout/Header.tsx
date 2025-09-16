@@ -1,19 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Search, 
-  ShoppingCart, 
-  User, 
-  Menu, 
-  X, 
-  Sun, 
-  Moon,
-  Heart,
-  Settings,
-  LogOut,
-  ChefHat
-} from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -49,7 +36,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-lg">
-              <ChefHat className="w-6 h-6 text-white" />
+              <span className="text-white font-bold">🍳</span>
             </div>
             <div>
               <h1 className="text-xl font-display font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
@@ -62,7 +49,7 @@ const Header: React.FC = () => {
           {/* Search Bar - Desktop */}
           <div className="hidden md:flex flex-1 max-w-lg mx-8">
             <form onSubmit={handleSearch} className="w-full relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-dark-400" />
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dark-400">🔍</span>
               <input
                 type="text"
                 placeholder="Search for recipes, chefs, or cuisines..."
@@ -93,7 +80,7 @@ const Header: React.FC = () => {
               onClick={toggleTheme}
               className="p-2 rounded-lg bg-dark-100 dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-dark-200 dark:hover:bg-dark-700 transition-colors"
             >
-              {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+              <span className="text-lg">{theme === 'light' ? '🌙' : '☀️'}</span>
             </button>
 
             {/* Cart */}
@@ -101,7 +88,7 @@ const Header: React.FC = () => {
               to="/cart"
               className="relative p-2 rounded-lg bg-dark-100 dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-dark-200 dark:hover:bg-dark-700 transition-colors"
             >
-              <ShoppingCart className="w-5 h-5" />
+              <span className="text-lg">🛒</span>
               {itemCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-primary-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   {itemCount}
@@ -148,7 +135,7 @@ const Header: React.FC = () => {
                         className="flex items-center space-x-2 px-4 py-2 text-sm text-dark-700 dark:text-dark-300 hover:bg-dark-50 dark:hover:bg-dark-700"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <User className="w-4 h-4" />
+                        <span>👤</span>
                         <span>Profile</span>
                       </Link>
                       <Link
@@ -156,7 +143,7 @@ const Header: React.FC = () => {
                         className="flex items-center space-x-2 px-4 py-2 text-sm text-dark-700 dark:text-dark-300 hover:bg-dark-50 dark:hover:bg-dark-700"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <Heart className="w-4 h-4" />
+                        <span>❤️</span>
                         <span>Favorites</span>
                       </Link>
                       <Link
@@ -164,7 +151,7 @@ const Header: React.FC = () => {
                         className="flex items-center space-x-2 px-4 py-2 text-sm text-dark-700 dark:text-dark-300 hover:bg-dark-50 dark:hover:bg-dark-700"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <Settings className="w-4 h-4" />
+                        <span>⚙️</span>
                         <span>Settings</span>
                       </Link>
                       <button
@@ -174,7 +161,7 @@ const Header: React.FC = () => {
                         }}
                         className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
                       >
-                        <LogOut className="w-4 h-4" />
+                        <span>🚪</span>
                         <span>Sign out</span>
                       </button>
                     </motion.div>
@@ -197,7 +184,7 @@ const Header: React.FC = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 rounded-lg text-dark-600 dark:text-dark-300"
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <span className="text-xl">{isMenuOpen ? '✕' : '☰'}</span>
             </button>
           </div>
         </div>
@@ -205,7 +192,7 @@ const Header: React.FC = () => {
         {/* Mobile Search */}
         <div className="md:hidden pb-4">
           <form onSubmit={handleSearch} className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-dark-400" />
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dark-400">🔍</span>
             <input
               type="text"
               placeholder="Search recipes..."
